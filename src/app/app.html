@@ -1,0 +1,283 @@
+<a class="skip-link" href="#main-content">Vai al contenuto principale</a>
+
+<header class="site-header">
+  <nav class="nav" aria-label="Navigazione principale">
+    <a class="nav-brand" href="#hero">AM</a>
+    <div id="primary-nav" class="nav-links" [class.open]="mobileMenuOpen">
+      <a href="#about" (click)="closeMenu()">{{ t.nav.about }}</a>
+      <a href="#experience" (click)="closeMenu()">{{ t.nav.experience }}</a>
+      <a href="#education" (click)="closeMenu()">{{ t.nav.education }}</a>
+      <a href="#certifications" (click)="closeMenu()">{{ t.nav.certifications }}</a>
+      <a href="#volunteer" (click)="closeMenu()">{{ t.nav.volunteer }}</a>
+      <a href="#skills" (click)="closeMenu()">{{ t.nav.skills }}</a>
+      <a href="#contact" (click)="closeMenu()">{{ t.nav.contact }}</a>
+    </div>
+    <div class="nav-controls">
+      <button
+        type="button"
+        class="menu-toggle"
+        (click)="toggleMenu()"
+        aria-controls="primary-nav"
+        [attr.aria-expanded]="mobileMenuOpen"
+        aria-label="Apri/chiudi il menu di navigazione"
+      >
+        @if (mobileMenuOpen) {
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M6.4 4.98 19.02 17.6a1 1 0 0 1-1.42 1.42L4.98 6.4A1 1 0 1 1 6.4 4.98Zm12.62 0A1 1 0 0 1 20.44 6.4L7.82 19.02a1 1 0 0 1-1.42-1.42L19.02 4.98a1 1 0 0 1 1.4 0Z"
+            />
+          </svg>
+        } @else {
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="2.4" rx="1.2" />
+            <rect x="3" y="10.8" width="18" height="2.4" rx="1.2" />
+            <rect x="3" y="16.6" width="18" height="2.4" rx="1.2" />
+          </svg>
+        }
+      </button>
+      <div class="lang-switch" role="group" [attr.aria-label]="t.langToggleLabel">
+        <button
+          type="button"
+          class="lang-btn"
+          [class.active]="lang === 'it'"
+          (click)="setLang('it')"
+          [attr.aria-pressed]="lang === 'it'"
+        >
+          IT
+        </button>
+        <button
+          type="button"
+          class="lang-btn"
+          [class.active]="lang === 'en'"
+          (click)="setLang('en')"
+          [attr.aria-pressed]="lang === 'en'"
+        >
+          EN
+        </button>
+      </div>
+      <button
+        type="button"
+        class="theme-toggle"
+        (click)="toggleTheme()"
+        [attr.aria-label]="theme === 'dark' ? t.themeToggleLabelToLight : t.themeToggleLabelToDark"
+        [attr.title]="theme === 'dark' ? t.themeToggleLabelToLight : t.themeToggleLabelToDark"
+      >
+        @if (theme === 'dark') {
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 4.5a1 1 0 0 1 1 1V7a1 1 0 1 1-2 0V5.5a1 1 0 0 1 1-1Zm0 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm0 2a1 1 0 0 1 1 1v1.5a1 1 0 1 1-2 0V18.5a1 1 0 0 1 1-1Zm7.5-7.5a1 1 0 0 1 1-1H22a1 1 0 1 1 0 2h-1.5a1 1 0 0 1-1-1ZM2 12a1 1 0 0 1 1-1h1.5a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1Zm15.66-6.66a1 1 0 0 1 1.42 0 1 1 0 0 1 0 1.42l-1.06 1.06a1 1 0 1 1-1.42-1.42l1.06-1.06ZM6.4 17.66a1 1 0 0 1 1.42 0 1 1 0 0 1 0 1.42l-1.06 1.06a1 1 0 1 1-1.42-1.42l1.06-1.06Zm11.26 1.06a1 1 0 0 1 0-1.42 1 1 0 0 1 1.42 0l1.06 1.06a1 1 0 1 1-1.42 1.42l-1.06-1.06ZM6.4 6.34a1 1 0 0 1 0-1.42 1 1 0 0 1 1.42 0l1.06 1.06a1 1 0 1 1-1.42 1.42L6.4 6.34Z"
+            />
+          </svg>
+        } @else {
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M20.7 14.9A8.5 8.5 0 0 1 9.1 3.3a.75.75 0 0 0-.9-1A10 10 0 1 0 21.7 15.8a.75.75 0 0 0-1-.9Z"
+            />
+          </svg>
+        }
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+  <!-- Hero -->
+  <section id="hero" class="hero">
+    <div class="hero-inner">
+      <img
+        class="hero-photo"
+        src="profile.jpeg"
+        [attr.alt]="t.photoAlt"
+        width="180"
+        height="180"
+      />
+      <p class="hero-eyebrow">{{ c.heroEyebrow }}</p>
+      <h1 class="hero-name">{{ fullName }}</h1>
+      <p class="hero-role">{{ c.role }}</p>
+      <p class="hero-location">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M12 2C7.6 2 4 5.6 4 10c0 5.4 7 11.5 7.3 11.7.2.2.4.3.7.3s.5-.1.7-.3C13 21.5 20 15.4 20 10c0-4.4-3.6-8-8-8Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"
+          />
+        </svg>
+        {{ c.location }}
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">{{ t.ctaContact }}</a>
+        <a class="btn btn-outline" [href]="linkedin" target="_blank" rel="noopener">{{ t.ctaLinkedin }}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section">
+    <div class="section-inner">
+      <h2 class="section-title">{{ t.sectionTitles.about }}</h2>
+      <div class="about-content">
+        @for (paragraph of c.about; track paragraph) {
+          <p class="about-paragraph">{{ paragraph }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience" class="section section-alt">
+    <div class="section-inner">
+      <h2 class="section-title">{{ t.sectionTitles.experience }}</h2>
+      <ol class="timeline">
+        @for (item of c.experience; track item.company + item.period) {
+          <li class="timeline-item">
+            <div class="timeline-marker" aria-hidden="true"></div>
+            <div class="timeline-content">
+              <h3 class="timeline-role">{{ item.role }}</h3>
+              <p class="timeline-company">
+                @if (item.website) {
+                  <a [href]="item.website" target="_blank" rel="noopener">{{ item.company }}</a>
+                } @else {
+                  {{ item.company }}
+                }
+              </p>
+              <p class="timeline-meta">{{ item.period }}@if (item.location) { &middot; {{ item.location }} }</p>
+              @if (item.techs) {
+                <div class="tech-chips">
+                  @for (tech of item.techs; track tech) {
+                    <span class="tech-chip">
+                      <span class="tech-chip-badge" [style.background]="techMeta(tech).bg" [style.color]="techMeta(tech).fg">{{ techMeta(tech).abbr }}</span>
+                      <span class="tech-chip-label">{{ tech }}</span>
+                    </span>
+                  }
+                </div>
+              }
+              @if (item.description) {
+                <p class="timeline-description">{{ item.description }}</p>
+              }
+              @if (item.highlights) {
+                <ul class="timeline-highlights">
+                  @for (point of item.highlights; track point) {
+                    <li>{{ point }}</li>
+                  }
+                </ul>
+              }
+              @if (item.projects) {
+                <div class="projects">
+                  @for (proj of item.projects; track proj.name + proj.period) {
+                    <article class="project-card">
+                      <div class="project-head">
+                        <h4 class="project-name">{{ proj.name }}</h4>
+                        <span class="project-period">{{ proj.period }}</span>
+                      </div>
+                      @if (proj.client) {
+                        <p class="project-client">{{ t.clientLabel }}: {{ proj.client }}</p>
+                      }
+                      <p class="project-activity">{{ proj.activity }}</p>
+                      @if (proj.description) {
+                        <p class="project-description">{{ proj.description }}</p>
+                      }
+                      <div class="tech-chips">
+                        @for (tech of proj.tech; track tech) {
+                          <span class="tech-chip">
+                            <span class="tech-chip-badge" [style.background]="techMeta(tech).bg" [style.color]="techMeta(tech).fg">{{ techMeta(tech).abbr }}</span>
+                            <span class="tech-chip-label">{{ tech }}</span>
+                          </span>
+                        }
+                      </div>
+                    </article>
+                  }
+                </div>
+              }
+            </div>
+          </li>
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section id="education" class="section">
+    <div class="section-inner">
+      <h2 class="section-title">{{ t.sectionTitles.education }}</h2>
+      <div class="card-grid">
+        @for (item of c.education; track item.title) {
+          <article class="card">
+            <h3 class="card-title">{{ item.title }}</h3>
+            <p class="card-subtitle">{{ item.institution }}</p>
+            @if (item.period) {
+              <p class="card-meta">{{ item.period }}</p>
+            }
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <section id="certifications" class="section section-alt">
+    <div class="section-inner">
+      <h2 class="section-title">{{ t.sectionTitles.certifications }}</h2>
+      <div class="card-grid">
+        @for (cert of c.certifications; track cert.name) {
+          <article class="card card-cert">
+            <h3 class="card-title">{{ cert.name }}</h3>
+            <p class="card-subtitle">{{ cert.issuer }}</p>
+            @if (cert.detail) {
+              <p class="card-meta">{{ cert.detail }}</p>
+            }
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Volunteer -->
+  <section id="volunteer" class="section">
+    <div class="section-inner">
+      <h2 class="section-title">{{ t.sectionTitles.volunteer }}</h2>
+      <article class="card card-volunteer">
+        <h3 class="card-title">{{ c.volunteer.organization }}</h3>
+        <p class="card-subtitle">{{ c.volunteer.role }}</p>
+        <p class="card-meta">{{ c.volunteer.period }}</p>
+        <p class="card-meta">{{ c.volunteer.focus }}</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="section section-alt">
+    <div class="section-inner">
+      <h2 class="section-title">{{ t.sectionTitles.skills }}</h2>
+      <div class="skills-grid">
+        @for (group of c.skills; track group.category) {
+          <div class="skill-group">
+            <h3 class="skill-category">{{ group.category }}</h3>
+            <div class="tech-chips">
+              @for (tag of group.items; track tag) {
+                <span class="tech-chip">
+                  <span class="tech-chip-badge" [style.background]="techMeta(tag).bg" [style.color]="techMeta(tag).fg">{{ techMeta(tag).abbr }}</span>
+                  <span class="tech-chip-label">{{ tag }}</span>
+                </span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Contact / Footer -->
+<footer id="contact" class="footer">
+  <div class="section-inner footer-inner">
+    <h2 class="section-title footer-title">{{ t.sectionTitles.contact }}</h2>
+    <p class="footer-text">
+      {{ t.footerText }}
+    </p>
+    <div class="footer-links">
+      <a class="btn btn-primary" [href]="linkedin" target="_blank" rel="noopener">
+        {{ t.footerLinkedin }}
+      </a>
+    </div>
+    <!-- TODO: aggiungere qui email e/o numero di telefono quando disponibili pubblicamente. -->
+    <p class="footer-copy">&copy; {{ currentYear }} {{ fullName }}</p>
+  </div>
+</footer>
