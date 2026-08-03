@@ -86,14 +86,18 @@
   <!-- Hero -->
   <section id="hero" class="hero">
     <div class="hero-inner">
-      <img
-        class="hero-photo"
-        src="profile.jpeg"
-        [attr.alt]="t.photoAlt"
-        width="180"
-        height="180"
-        fetchpriority="high"
-      />
+      <picture>
+        <source srcset="profile.avif" type="image/avif" />
+        <source srcset="profile.webp" type="image/webp" />
+        <img
+          class="hero-photo"
+          src="profile.jpeg"
+          [attr.alt]="t.photoAlt"
+          width="180"
+          height="180"
+          fetchpriority="high"
+        />
+      </picture>
       <p class="hero-eyebrow">{{ c.heroEyebrow }}</p>
       <h1 class="hero-name">{{ fullName }}</h1>
       <p class="hero-role">{{ c.role }}</p>
