@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 
 type Lang = 'it' | 'en';
 type Theme = 'light' | 'dark';
@@ -583,7 +586,7 @@ const NIGHT_END_HOUR = 7;
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [MatButtonModule, MatToolbarModule, MatCardModule],
   templateUrl: './app.html',
   styleUrl: './app.css',
   host: {

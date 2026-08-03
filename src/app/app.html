@@ -1,7 +1,7 @@
 <a class="skip-link" href="#main-content">Vai al contenuto principale</a>
 
 <header class="site-header">
-  <nav class="nav" aria-label="Navigazione principale">
+  <mat-toolbar class="nav" role="navigation" aria-label="Navigazione principale">
     <a class="nav-brand" href="#hero">AM</a>
     <div id="primary-nav" class="nav-links" [class.open]="mobileMenuOpen">
       <a href="#about" (click)="closeMenu()">{{ t.nav.about }}</a>
@@ -15,6 +15,7 @@
     <div class="nav-controls">
       <button
         type="button"
+        mat-icon-button
         class="menu-toggle"
         (click)="toggleMenu()"
         aria-controls="primary-nav"
@@ -57,6 +58,7 @@
       </div>
       <button
         type="button"
+        mat-icon-button
         class="theme-toggle"
         (click)="toggleTheme()"
         [attr.aria-label]="theme === 'dark' ? t.themeToggleLabelToLight : t.themeToggleLabelToDark"
@@ -77,7 +79,7 @@
         }
       </button>
     </div>
-  </nav>
+  </mat-toolbar>
 </header>
 
 <main id="main-content">
@@ -90,6 +92,7 @@
         [attr.alt]="t.photoAlt"
         width="180"
         height="180"
+        fetchpriority="high"
       />
       <p class="hero-eyebrow">{{ c.heroEyebrow }}</p>
       <h1 class="hero-name">{{ fullName }}</h1>
@@ -103,8 +106,8 @@
         {{ c.location }}
       </p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#contact">{{ t.ctaContact }}</a>
-        <a class="btn btn-outline" [href]="linkedin" target="_blank" rel="noopener">{{ t.ctaLinkedin }}</a>
+        <a mat-flat-button class="btn btn-primary" href="#contact">{{ t.ctaContact }}</a>
+        <a mat-stroked-button class="btn btn-outline" [href]="linkedin" target="_blank" rel="noopener noreferrer">{{ t.ctaLinkedin }}</a>
       </div>
     </div>
   </section>
@@ -133,7 +136,7 @@
               <h3 class="timeline-role">{{ item.role }}</h3>
               <p class="timeline-company">
                 @if (item.website) {
-                  <a [href]="item.website" target="_blank" rel="noopener">{{ item.company }}</a>
+                  <a [href]="item.website" target="_blank" rel="noopener noreferrer">{{ item.company }}</a>
                 } @else {
                   {{ item.company }}
                 }
@@ -162,7 +165,7 @@
               @if (item.projects) {
                 <div class="projects">
                   @for (proj of item.projects; track proj.name + proj.period) {
-                    <article class="project-card">
+                    <mat-card class="project-card" appearance="outlined" role="article">
                       <div class="project-head">
                         <h4 class="project-name">{{ proj.name }}</h4>
                         <span class="project-period">{{ proj.period }}</span>
@@ -182,7 +185,7 @@
                           </span>
                         }
                       </div>
-                    </article>
+                    </mat-card>
                   }
                 </div>
               }
@@ -199,13 +202,13 @@
       <h2 class="section-title">{{ t.sectionTitles.education }}</h2>
       <div class="card-grid">
         @for (item of c.education; track item.title) {
-          <article class="card">
+          <mat-card class="card" appearance="outlined" role="article">
             <h3 class="card-title">{{ item.title }}</h3>
             <p class="card-subtitle">{{ item.institution }}</p>
             @if (item.period) {
               <p class="card-meta">{{ item.period }}</p>
             }
-          </article>
+          </mat-card>
         }
       </div>
     </div>
@@ -217,13 +220,13 @@
       <h2 class="section-title">{{ t.sectionTitles.certifications }}</h2>
       <div class="card-grid">
         @for (cert of c.certifications; track cert.name) {
-          <article class="card card-cert">
+          <mat-card class="card card-cert" appearance="outlined" role="article">
             <h3 class="card-title">{{ cert.name }}</h3>
             <p class="card-subtitle">{{ cert.issuer }}</p>
             @if (cert.detail) {
               <p class="card-meta">{{ cert.detail }}</p>
             }
-          </article>
+          </mat-card>
         }
       </div>
     </div>
@@ -233,12 +236,12 @@
   <section id="volunteer" class="section">
     <div class="section-inner">
       <h2 class="section-title">{{ t.sectionTitles.volunteer }}</h2>
-      <article class="card card-volunteer">
+      <mat-card class="card card-volunteer" appearance="outlined" role="article">
         <h3 class="card-title">{{ c.volunteer.organization }}</h3>
         <p class="card-subtitle">{{ c.volunteer.role }}</p>
         <p class="card-meta">{{ c.volunteer.period }}</p>
         <p class="card-meta">{{ c.volunteer.focus }}</p>
-      </article>
+      </mat-card>
     </div>
   </section>
 
@@ -273,7 +276,7 @@
       {{ t.footerText }}
     </p>
     <div class="footer-links">
-      <a class="btn btn-primary" [href]="linkedin" target="_blank" rel="noopener">
+      <a mat-flat-button class="btn btn-primary" [href]="linkedin" target="_blank" rel="noopener noreferrer">
         {{ t.footerLinkedin }}
       </a>
     </div>

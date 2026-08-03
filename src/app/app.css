@@ -88,6 +88,14 @@
 }
 
 .nav {
+  /* Reset Angular Material's mat-toolbar tokens: the header's translucent, blurred
+     background already lives on .site-header, and the toolbar's fixed 56/64px row
+     height would override this component's own padding-driven sizing. */
+  --mat-toolbar-container-background-color: transparent;
+  --mat-toolbar-container-text-color: var(--ink);
+  --mat-toolbar-standard-height: auto;
+  --mat-toolbar-mobile-height: auto;
+
   position: relative;
   max-width: var(--max-width);
   margin: 0 auto;
@@ -157,7 +165,9 @@
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.03em;
-  padding: 0.4rem 0.7rem;
+  /* Touch-target accessibility: >=44px tall, comfortable horizontal padding. */
+  min-height: 44px;
+  padding: 0.4rem 0.9rem;
   cursor: pointer;
 }
 
@@ -166,44 +176,46 @@
   color: var(--hero-start);
 }
 
-.theme-toggle {
+/* .theme-toggle / .menu-toggle are Angular Material icon buttons (matIconButton).
+   Material already renders the actual <button> at 40x40px via --mat-icon-button-state-layer-size
+   (default). We bump it to 44px (WCAG 2.5.5 target size) and re-skin it via the exposed
+   Material tokens instead of fighting the library's own `color`/`background-color`
+   properties: those are set as literal CSS declarations at equal specificity, so
+   overriding the underlying CSS custom properties is the only way Angular Material
+   guarantees a predictable, order-independent result (see
+   https://material.angular.dev/guide/theming for the token pattern). */
+.theme-toggle,
+.menu-toggle {
+  --mat-icon-button-state-layer-size: 44px;
+  --mat-icon-button-icon-size: 22px;
+  --mat-icon-button-icon-color: var(--ink);
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   border: 1px solid var(--border);
-  border-radius: 50%;
   background: transparent;
-  color: var(--ink);
   cursor: pointer;
-  font-size: 1.05rem;
 }
 
-.theme-toggle:hover,
-.theme-toggle:focus-visible {
-  border-color: var(--accent);
-  color: var(--accent-dark);
+.theme-toggle {
+  border-radius: 50%;
 }
 
 .menu-toggle {
   display: none;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--border);
   border-radius: 8px;
-  background: transparent;
-  color: var(--ink);
-  cursor: pointer;
   order: -1;
 }
 
+.theme-toggle:hover,
+.theme-toggle:focus-visible,
 .menu-toggle:hover,
 .menu-toggle:focus-visible {
   border-color: var(--accent);
-  color: var(--accent-dark);
+  --mat-icon-button-icon-color: var(--accent-dark);
 }
 
 .section-inner {
@@ -302,6 +314,16 @@
   gap: 1rem;
 }
 
+/*
+  .btn / .btn-primary / .btn-outline live on <a mat-flat-button> / <a mat-stroked-button>
+  anchors. Rather than fighting Angular Material's own literal `background`/`color`
+  declarations with specificity tricks, we drive the brand look through the component's
+  documented CSS custom properties (--mat-button-filled-*, --mat-button-outlined-*):
+  those are only ever read via var() by Material's own stylesheet, never assigned a
+  value there, so our assignment always wins regardless of style-injection order.
+  This keeps the CTA buttons on the same navy/cyan scheme as before instead of the
+  generic Material tonal color, while still getting Material's ripple/focus/M3 shape.
+*/
 .btn {
   display: inline-block;
   padding: 0.75rem 1.6rem;
@@ -319,6 +341,9 @@
 }
 
 .btn-primary {
+  --mat-button-filled-container-color: var(--accent);
+  --mat-button-filled-label-text-color: var(--hero-start);
+  --mat-button-filled-container-shape: 999px;
   background: var(--accent);
   color: var(--hero-start);
   box-shadow: 0 8px 20px rgba(12, 214, 228, 0.35);
@@ -326,17 +351,24 @@
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
+  --mat-button-filled-container-color: var(--accent-dark);
+  --mat-button-filled-label-text-color: #fff;
   background: var(--accent-dark);
   color: #fff;
 }
 
 .btn-outline {
+  --mat-button-outlined-label-text-color: #f4f1ea;
+  --mat-button-outlined-outline-color: rgba(244, 241, 234, 0.5);
+  --mat-button-outlined-container-shape: 999px;
   color: #f4f1ea;
   border-color: rgba(244, 241, 234, 0.5);
 }
 
 .btn-outline:hover,
 .btn-outline:focus-visible {
+  --mat-button-outlined-outline-color: #f4f1ea;
+  --mat-button-outlined-label-text-color: #f4f1ea;
   border-color: #f4f1ea;
   background: rgba(244, 241, 234, 0.08);
 }
@@ -515,7 +547,15 @@
   gap: 1rem;
 }
 
+/* .project-card is now a <mat-card appearance="outlined">. Background/shape/outline are
+   re-themed through Material's own outlined-card tokens (unambiguous, order-independent).
+   border-top-color keeps `!important`: Material's outline token colors all four sides
+   equally, and only a longhand override can carve out just the top edge for the brand's
+   signature colored-accent-border look without a broader specificity fight. */
 .project-card {
+  --mat-card-outlined-container-color: var(--bg-alt);
+  --mat-card-outlined-outline-color: var(--border);
+  --mat-card-outlined-container-shape: 10px;
   background: var(--bg-alt);
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -574,17 +614,27 @@
   gap: 1.25rem;
 }
 
+/* .card / .card-cert / .card-volunteer are now <mat-card appearance="outlined">, restyled
+   via Material's outlined-card tokens to keep the pre-existing look (surface color, border,
+   radius, shadow) instead of stock Material card shadows. The 3px colored top border is the
+   one detail Material's single "outline color" token can't express (it colors all 4 sides
+   equally), so it's reasserted with `!important` — a narrow, intentional override of a
+   single decorative edge, not a fight against the library. */
 .card {
+  --mat-card-outlined-container-color: var(--surface);
+  --mat-card-outlined-outline-color: var(--border);
+  --mat-card-outlined-container-shape: var(--radius);
+  --mat-card-outlined-container-elevation: var(--shadow);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1.5rem;
   box-shadow: var(--shadow);
-  border-top: 3px solid var(--accent);
+  border-top: 3px solid var(--accent) !important;
 }
 
 .card-cert {
-  border-top-color: var(--teal);
+  border-top-color: var(--teal) !important;
 }
 
 .card-title {
@@ -757,5 +807,33 @@
 
   .timeline-item {
     padding-left: 2rem;
+  }
+}
+
+/* Respect the user's motion preference: disable/shorten color transitions and
+   remove hover/focus transform animations (button lift, etc.). Angular Material's
+   own ripple/ease animations are already reduced globally by the CDK when this
+   media feature is active, so this block only needs to cover this component's
+   own custom CSS transitions and transforms. */
+@media (prefers-reduced-motion: reduce) {
+  :host,
+  .site-header,
+  .section,
+  .section-alt,
+  .card,
+  .timeline-content,
+  .tech-chip,
+  .lang-btn,
+  .theme-toggle,
+  .menu-toggle,
+  .nav-links a,
+  .btn {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  .btn:hover,
+  .btn:focus-visible {
+    transform: none;
   }
 }

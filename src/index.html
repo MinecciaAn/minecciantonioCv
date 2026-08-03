@@ -1,14 +1,86 @@
 <!doctype html>
 <html lang="it">
-<head>
-  <meta charset="utf-8">
-  <title>Antonio Mineccia | Software Developer Engineer Front-End</title>
-  <meta name="description" content="Antonio Mineccia — Software Developer Engineer specializzato in front-end. Angular, React, esperienza professionale, formazione e competenze.">
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Antonio Mineccia | Software Developer Engineer Front-End</title>
+    <meta
+      name="description"
+      content="Antonio Mineccia — Software Developer Engineer specializzato in front-end. Angular, React, esperienza professionale, formazione e competenze."
+    />
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <!--
+    Security notes:
+    - This is a fully static site (no backend, no database, no forms submitting data).
+      GitHub Pages serves static files only and cannot set custom HTTP response headers,
+      so the CSP below is delivered via <meta> as a best-effort mitigation. Directives that
+      only work as real HTTP headers (e.g. frame-ancestors, X-Frame-Options) CANNOT be
+      enforced this way and are intentionally omitted rather than included as false security.
+    - script-src 'self' blocks any inline/third-party script injection; style-src allows
+      'unsafe-inline' because Angular writes some inline styles at runtime.
+  -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <link rel="canonical" href="https://minecciaan.github.io/minecciantonioCv/" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Antonio Mineccia | Software Developer Engineer Front-End" />
+    <meta
+      property="og:description"
+      content="Antonio Mineccia — Software Developer Engineer specializzato in front-end. Angular, React, esperienza professionale, formazione e competenze."
+    />
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content="https://minecciaan.github.io/minecciantonioCv/" />
+    <meta
+      property="og:image"
+      content="https://minecciaan.github.io/minecciantonioCv/profile.jpeg"
+    />
+    <meta property="profile:first_name" content="Antonio" />
+    <meta property="profile:last_name" content="Mineccia" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Antonio Mineccia | Software Developer Engineer Front-End" />
+    <meta
+      name="twitter:description"
+      content="Antonio Mineccia — Software Developer Engineer specializzato in front-end. Angular, React, esperienza professionale, formazione e competenze."
+    />
+    <meta
+      name="twitter:image"
+      content="https://minecciaan.github.io/minecciantonioCv/profile.jpeg"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Antonio Mineccia",
+        "jobTitle": "Software Developer Engineer specializzato in front-end",
+        "url": "https://minecciaan.github.io/minecciantonioCv/",
+        "image": "https://minecciaan.github.io/minecciantonioCv/profile.jpeg",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Noicattaro, Puglia, Italia"
+        },
+        "sameAs": ["https://www.linkedin.com/in/antonio-mineccia-04ba58147"]
+      }
+    </script>
+    <!--
+      Note: Angular Material's ng-add schematic normally links Google Fonts (Roboto +
+      Material Icons) here. Those are intentionally NOT included: they are third-party
+      requests that would violate the `default-src 'self'` CSP above, add render-blocking
+      network round-trips (hurting LCP/performance), and leak visitor IPs to Google. Material
+      typography instead falls back to the existing system font stack (see material-theme.scss),
+      and icon buttons use inline SVG (see app.html) instead of the Material Icons font.
+    -->
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
 </html>
