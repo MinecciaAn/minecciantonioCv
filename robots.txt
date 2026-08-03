@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://minecciaan.github.io/minecciantonioCv/sitemap.xml
